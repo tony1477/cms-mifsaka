@@ -22,6 +22,16 @@ function EnableButtonHeader() {
   $("button[name='paymentmethodidClearButton']").prop("disabled", false);
 }
 
+function DisabledCustomer() {
+  $("button[name='addressbookidShowButton']").prop("disabled", true);
+  $("button[name='addressbookidClearButton']").prop("disabled", true);
+}
+
+function EnableCustomer() {
+  $("button[name='addressbookidShowButton']").prop("disabled", false);
+  $("button[name='addressbookidClearButton']").prop("disabled", false);
+}
+
 function DisablebuttonDetail() {
   $("input[name='productname']").prop("readonly", true);
   $("input[name='qty']").prop("readonly", true);
@@ -111,45 +121,73 @@ $(document).ready(function () {
 
   $("select#sotype").change(function () {
     let value = $(this).children("option:selected").val();
-    if (value == 2) {
+    if (value == 1) {
       // company
-
+      $("#packagegrid").hide();
+      $("#qtypkggrid").hide();
+      $("#poplantgrid").hide();
+      $("input[name='packageid']").val("");
+      $("input[name='packagename']").val("");
+      $("input[name='poheaderid']").val("");
+      $("input[name='pono']").val("");
+      $("input[name='qtypkg']").val("");
+      $("#isdisplaygrid").show();
+      $("#materialtypesgrid").show();
+      $("input[name='packageid']").attr("required", false);
+      $("input[name='poheaderid']").attr("required", false);
+      $("input[name='qtypkg']").attr("required", false);
+      $("input[name='materialtypeid']").attr("required", true);
+      visible = true;
+      ShowButtonDisc();
+      ShowButtonDetail();
+      EnableCustomer();
+      //hapus detailso dan sodic()
+    } else if (value == 2) {
+      // hide
+      // var r = confirm("Apakah Anda yakin ingin mengganti Detail SO ?");
+      // if (r == true) {
+        //$("select#sotype").val('');
       $("#packagegrid").show();
       $("#qtypkggrid").show();
+      $("#poplantgrid").hide();
       $("#isdisplay").prop("checked", false);
       $("#isdisplaygrid").hide();
       $("#materialtypesgrid").hide();
       $("input[name='packageid']").attr("required", true);
+      $("input[name='poheaderid']").attr("required", false);
       $("input[name='materialtypeid']").attr("required", false);
       $("input[name='materialtypeid']").val("");
       $("input[name='description']").val("");
+      $("input[name='poheaderid']").val("");
+      $("input[name='pono']").val("");
       HideButtonDetail();
       HideButtonDisc();
       visible = false;
-      //hapus detailso dan sodic()
-    } else if (value == 1) {
-      // hide
-      var r = confirm("Apakah Anda yakin ingin mengganti Detail SO ?");
-      if (r == true) {
-        //$("select#sotype").val('');
-        $("#packagegrid").hide();
-        $("#qtypkggrid").hide();
-        $("input[name='packageid']").val("");
-        $("input[name='packagename']").val("");
-        $("input[name='qtypkg']").val("");
-        $("#isdisplaygrid").show();
-        $("#materialtypesgrid").show();
-        $("input[name='packageid']").attr("required", false);
-        $("input[name='qtypkg']").attr("required", false);
-        $("input[name='materialtypeid']").attr("required", true);
-        visible = true;
-        ShowButtonDisc();
-        ShowButtonDetail();
+      EnableCustomer();
         // hapus sodetail dan sodisc
-      } else {
-        console.log("else here");
-        $("select#sotype").val(2);
-      }
+      // } else {
+      //   console.log("else here");
+      //   $("select#sotype").val(2);
+      // }
+    }
+    else if(value == 3) {
+      $("#packagegrid").hide();
+      $("#qtypkggrid").hide();
+      $("#isdisplay").prop("checked", false);
+      $("#isdisplaygrid").hide();
+      $("#materialtypesgrid").hide();
+      $("#poplantgrid").show();
+      $("input[name='poheaderid']").attr("required", true);
+      $("input[name='packageid']").attr("required", false);
+      $("input[name='materialtypeid']").attr("required", false);
+      $("input[name='materialtypeid']").val("");
+      $("input[name='description']").val("");
+      $("input[name='packageid']").val("");
+      $("input[name='packagename']").val("");
+      HideButtonDetail();
+      HideButtonDisc();
+      visible = false;
+      DisabledCustomer();
     }
   });
   /*
@@ -341,18 +379,7 @@ function updatedata($id) {
     dataType: "json",
     success: function (data) {
       if (data.status == "success") {
-        if (data.sotype == 2) {
-          $("#packagegrid").show();
-          $("#qtypkggrid").show();
-          $("#isdisplay").prop("checked", false);
-          $("#isdisplaygrid").hide();
-          $("#materialtypesgrid").hide();
-          EnableButtonHeader();
-          $("#CreateButtonAddSoDetail").hide();
-          $("#CreateButtonAddSoDisc").hide();
-          $("#CreateButtonDelSoDetail").hide();
-          $("#CreateButtonDelSoDisc").hide();
-        } else {
+        if (data.sotype == 1) {
           DisableButtonHeader();
           $("#CreateButtonAddSoDetail").show();
           $("#CreateButtonAddSoDisc").show();
@@ -360,6 +387,37 @@ function updatedata($id) {
           $("#CreateButtonDelSoDisc").show();
           $("#materialtypesgrid").show();
           $("#isdisplaygrid").show();
+          $("#packagegrid").hide();
+          $("#qtypkggrid").hide();
+          $("#poplantgrid").hide();
+          EnableCustomer();
+        } else if(data.sotype == 2) {
+          DisableButtonHeader();
+          $("#packagegrid").show();
+          $("#qtypkggrid").show();
+          $("#isdisplay").prop("checked", false);
+          $("#isdisplaygrid").hide();
+          $("#materialtypesgrid").hide();
+          $("#poplantgrid").hide();
+          $("#CreateButtonAddSoDetail").hide();
+          $("#CreateButtonAddSoDisc").hide();
+          $("#CreateButtonDelSoDetail").hide();
+          $("#CreateButtonDelSoDisc").hide();
+          EnableCustomer();
+        }
+        else if(data.sotype == 3) {
+          DisableButtonHeader();
+          $("#packagegrid").hide();
+          $("#qtypkggrid").hide();
+          $("#isdisplay").prop("checked", false);
+          $("#isdisplaygrid").hide();
+          $("#materialtypesgrid").hide();
+          $("#poplantgrid").show();
+          $("#CreateButtonAddSoDetail").hide();
+          $("#CreateButtonAddSoDisc").hide();
+          $("#CreateButtonDelSoDetail").hide();
+          $("#CreateButtonDelSoDisc").hide();
+          DisabledCustomer();
         }
         $("input[name='actiontype']").val(1);
         $("input[name='soheaderid']").val(data.soheaderid);
@@ -551,6 +609,7 @@ function savedata() {
   let sotype = $("select#sotype").val();
   let pkgid = $("input[name='packageid']").val();
   let materialtypeid = $("input[name='materialtypeid']").val();
+  let poid = $("input[name='poheaderid']").val();
   let next = 0;
   if (sotype == 1) {
     if (materialtypeid == "") {
@@ -565,6 +624,13 @@ function savedata() {
       next = 1;
     }
   }
+  else if (sotype == 3) {
+    if (poid == "") {
+      alert("PO Belum Diisi");
+    } else {
+      next = 1;
+    }
+  } 
   //else if((sotype==1 && pkgid!='') || (sotype==2 && materialtypeid!='')) {
   //  next = 1;
   //}

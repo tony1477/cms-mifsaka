@@ -2,7 +2,7 @@
 	$sqldata="select a.addressbookid,a.fullname,a.creditlimit,a.currentlimit 
 		from addressbook a 
 		left join addressaccount b on b.addressbookid = a.addressbookid
-		where b.recordstatus = 1 and b.companyid = '".(isset($_REQUEST['companyid'])?$_REQUEST['companyid']:"")."' and a.recordstatus = 1 and a.iscustomer = 1 and (a.fullname like '%".(isset($_REQUEST['fullname'])?$_REQUEST['fullname']:'')."%' or a.addressbookid like '%".(isset($_REQUEST['fullname'])?$_REQUEST['fullname']:'')."%')
+		where b.recordstatus = 1 and b.companyid = '".(isset($_REQUEST['companyid'])?$_REQUEST['companyid']:"")."' and a.recordstatus = 1 and a.iscustomer = 1 and a.isextern = 1 and (a.fullname like '%".(isset($_REQUEST['fullname'])?$_REQUEST['fullname']:'')."%' or a.addressbookid like '%".(isset($_REQUEST['fullname'])?$_REQUEST['fullname']:'')."%')
 		order by a.fullname";
 	$count = count(Yii::app()->db->createCommand($sqldata)->queryAll());
 	$product=new CSqlDataProvider($sqldata,array(

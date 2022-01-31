@@ -2,13 +2,21 @@
     $sqlcount = "select count(1) ";
 	$sqldata = " select a.poheaderid,a.pono,b.fullname, a.companyid,c.companyname, a.docdate, a.headernote ";
                 
+                
     $from = " from poheader a
-                join addressbook b on b.addressbookid=a.addressbookid
-                join company c on c.companyid=a.companyid
-                where a.recordstatus=5 and a.companyid = ".(isset($_REQUEST['companyid'])?$_REQUEST['companyid']:'null')." 
-                and a.poheaderid in ( select z.poheaderid from podetail z where poqty > qtyres )
-                and a.pono like '%".(isset($_REQUEST['pono'])?$_REQUEST['pono']:'')."%'
-                and b.fullname like '%".(isset($_REQUEST['fullname'])?$_REQUEST['fullname']:'')."%' ";
+		join addressbook b on b.addressbookid=a.addressbookid
+		join company c on c.companyid=a.companyid
+		where a.recordstatus=5 
+		and a.pono like '%".(isset($_REQUEST['pono'])?$_REQUEST['pono']:'')."%'
+		and b.fullname like '%".(isset($_REQUEST['fullname'])?$_REQUEST['fullname']:'')."%'
+		and a.addressbookid = (select x.addressbookid from addressbook x where x.fullname = (select companyname from company ca where ca.companyid = ".(isset($_REQUEST['companyid']) ? $_REQUEST['companyid'] : '0').") and isextern=0)
+		and a.poheaderid in 
+		(
+		select z.poheaderid 
+		from podetail z 
+		where poqty > qtyres  
+		)
+		order by a.poheaderid desc ";
 	$count = Yii::app()->db->createCommand($sqlcount.$from)->queryScalar();
 	$product=new CSqlDataProvider($sqldata.$from,array(
 			'totalItemCount'=>$count,
@@ -60,6 +68,7 @@ function update_sodetail(){
                 $("textarea[name='shipto']").val(data.shipto);
                 $("textarea[name='headernote']").val(data.headernote);
 				$.fn.yiiGridView.update("SodetailList",{data:{'soheaderid':$("input[name='soheaderid']").val()}});
+				$.fn.yiiGridView.update("SodiscList",{data:{'soheaderid':$("input[name='soheaderid']").val()}});
 			}
 			else
 			{

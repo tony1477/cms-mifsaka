@@ -345,42 +345,15 @@ function cleardatatype() {
 				'name'=>'companyid',
 				'value'=>'$data["companyname"]'
 			),
-            array(
-				'header'=>$this->getCatalog('pono'),
-				'name'=>'poheaderid',
-				'value'=>'$data["pono"]'
-			),
 			array(
 				'header'=>$this->getCatalog('docno'),
 				'name'=>'sono',
 				'value'=>'$data["sono"]'
 			),
 			array(
-					'class'=>'CCheckBoxColumn',
-					'name'=>'isdisplay',
-					'header'=>$this->getCatalog('isdisplay'),
-					'selectableRows'=>'0',
-					'checked'=>'$data["isdisplay"]',                
-			),
-            array(
 				'header'=>$this->getCatalog('sotype'),
 				'name'=>'sotype',
 				'value'=>'$data["sotypename"]'
-			),
-            array(
-				'header'=>$this->getCatalog('materialtype'),
-				'name'=>'materialtypeid',
-				'value'=>'$data["description"]'
-			),
-            array(
-				'header'=>$this->getCatalog('package'),
-				'name'=>'packageid',
-				'value'=>'$data["packagename"]'
-			),
-            array(
-				'header'=>$this->getCatalog('qty'),
-				'name'=>'qtypackage',
-				'value'=>'Yii::app()->format->formatNumber($data["qtypackage"])'
 			),
 			array(
 				'header'=>$this->getCatalog('customer'),
@@ -388,14 +361,9 @@ function cleardatatype() {
 				'value'=>'$data["fullname"]'
 			),
 			array(
-				'header'=>$this->getCatalog('pocustno'),
-				'name'=>'pocustno',
-				'value'=>'$data["pocustno"]'
-			),
-			array(
-				'header'=>$this->getCatalog('sales'),
-				'name'=>'employeeid',
-				'value'=>'$data["salesname"]'
+				'header'=>$this->getCatalog('top'),
+				'name'=>'top',
+				'value'=>'$data["top"]'
 			),
 			array(
 				'header'=>$this->getCatalog('currentlimit'),
@@ -408,14 +376,9 @@ function cleardatatype() {
 				'value'=>'Yii::app()->format->formatCurrency($data["creditlimit"])'
 			),
 			array(
-				'header'=>$this->getCatalog('top'),
-				'name'=>'top',
-				'value'=>'$data["top"]'
-			),			
-			array(
-				'header'=>$this->getCatalog('paycode'),
-				'name'=>'paycode',
-				'value'=>'$data["paycode"]'
+				'header'=>$this->getCatalog('sales'),
+				'name'=>'employeeid',
+				'value'=>'$data["salesname"]'
 			),
 			array(
 				'header'=>$this->getCatalog('pendinganso'),
@@ -426,6 +389,33 @@ function cleardatatype() {
 				'header'=>$this->getCatalog('totalaftdisc'),
 				'name'=>'totalaftdisc',
 				'value'=>'Yii::app()->format->formatCurrency($data["totalaftdisc"])'
+			),
+			array(
+				'header'=>$this->getCatalog('docno'),
+				'name'=>'nodokumen',
+				'value'=>'$data["nodokumen"]'
+			),
+			array(
+				'header'=>$this->getCatalog('qty'),
+				'name'=>'qtypackage',
+				'value'=>'Yii::app()->format->formatNumber($data["qtypackage"])'
+			),
+			array(
+					'class'=>'CCheckBoxColumn',
+					'name'=>'isdisplay',
+					'header'=>$this->getCatalog('isdisplay'),
+					'selectableRows'=>'0',
+					'checked'=>'$data["isdisplay"]',                
+			),
+			array(
+				'header'=>$this->getCatalog('pocustno'),
+				'name'=>'pocustno',
+				'value'=>'$data["pocustno"]'
+			),						
+			array(
+				'header'=>$this->getCatalog('paycode'),
+				'name'=>'paycode',
+				'value'=>'$data["paycode"]'
 			),
 			array(
 				'header'=>$this->getCatalog('recordstatus'),
@@ -631,12 +621,27 @@ function cleardatatype() {
 					'classtypebox'=>'col-md-8',
 					'PopUpName'=>'admin.components.views.CompanyUserPopUp','PopGrid'=>'companygrid')); 
 			?>
-            <?php $this->widget('DataPopUp',
+			<div class="row">
+				<div class="col-md-4">
+					<label for="sotype"><?php echo $this->getCatalog('sotype')?></label> 
+				</div>
+				<div class="col-md-8">
+					<select class="form-control" id="sotype" name="sotype">
+						<option><?php echo getCatalog('sotype')?></option>
+						<?php $i=1; foreach($sotype as $row) : ?>
+							<option value=<?= $i;?> ><?= $row;?></option>
+						<?php $i++; endforeach; ?>
+					</select>
+				</div>
+		 	</div>
+			<div id="poplantgrid" style="display:none">
+			<?php $this->widget('DataPopUp',
 				array('id'=>'Widget','IDField'=>'poheaderid','ColField'=>'pono',
 					'IDDialog'=>'po_dialog','titledialog'=>$this->getCatalog('poplant'),'classtype'=>'col-md-4',
 					'classtypebox'=>'col-md-8',
 					'PopUpName'=>'purchasing.components.views.PoPlantPopUp','PopGrid'=>'poheaderidgrid','RelationID'=>'companyid')); 
 			?>
+			</div>
 			<?php $this->widget('DataPopUp',
 				array('id'=>'Widget','IDField'=>'addressbookid','ColField'=>'fullname',
 					'IDDialog'=>'customer_dialog','titledialog'=>$this->getCatalog('customer'),'classtype'=>'col-md-4',
@@ -652,19 +657,6 @@ function cleardatatype() {
           </span>
         </div>
       </div>
-            <div class="row">
-		 	<div class="col-md-4">
-				<label for="sotype"><?php echo $this->getCatalog('sotype')?></label> 
-		 	</div>
-			 <div class="col-md-8">
-				<select class="form-control" id="sotype" name="sotype">
-				  <option><?php echo getCatalog('sotype')?></option>
-					<?php $i=1; foreach($sotype as $row) : ?>
-						<option value=<?= $i;?> ><?= $row;?></option>
-					<?php $i++; endforeach; ?>
-				</select>
-			 </div>
-		 </div>
             
         <div id="packagegrid" style="display:none">
 		 
@@ -709,7 +701,7 @@ function cleardatatype() {
 					<input type="text" class="form-control" name="pocustno">
 				</div>
 			</div>
-            <div id="isdisplaygrid">
+			<div id="isdisplaygrid">
 			<div class="row">
 						<div class="col-md-4">
 							<label for="isdisplay"><?php echo $this->getCatalog('isdisplay')?></label>
