@@ -99,10 +99,10 @@ return array(
 		),
 
 		'db'=>array(
-			'connectionString' => 'mysql:host=127.0.0.1;port=5000;dbname=agemlive',
+			'connectionString' => 'mysql:host=localhost;port=3306;dbname=agemlive',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'cr4nkc4s3', 
+			'password' => 'martoni14', 
 			'charset' => 'utf8',
 			'initSQLs'=>array('set names utf8'),
 			'schemaCachingDuration' => 3600,
