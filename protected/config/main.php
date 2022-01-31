@@ -129,7 +129,7 @@ return array(
 		
 		'cache'=>array(
       //'class'=>'system.caching.CFileCache',
-      'class'=>'CRedisCache',
+      //'class'=>'CRedisCache',
 		),
 	),
 
