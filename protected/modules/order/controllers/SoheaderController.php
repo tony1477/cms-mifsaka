@@ -12,7 +12,10 @@ class SoheaderController extends AdminController
 			case when (((a.currentlimit + a.totalaftdisc + a.pendinganso) > c.creditlimit) and (c.top > 0)) then 1  
 			when (((a.currentlimit + a.totalaftdisc + a.pendinganso) <= c.creditlimit) and (c.top > 0)) then 2  
 			when (((a.currentlimit + a.totalaftdisc + a.pendinganso) > c.creditlimit) and (c.top <= 0)) then 3
-			else 4 end as warna,a.pendinganso, isdisplay, sotype, a.packageid, g.packagename, a.materialtypeid,h.description,case when sotype = 1 then 'Jenis Material' when sotype = 2 then 'PAKET' end as sotypename,qtypackage,a.createddate,a.updatedate
+			else 4 end as warna,a.pendinganso, isdisplay, sotype, a.packageid, g.packagename, a.materialtypeid,h.description,
+			case when sotype = 1 then 'UMUM' when sotype = 2 then 'PAKET' when sotype = 3 then 'CABANG' end as sotypename,
+			case when sotype = 1 then h.description when sotype = 2 then g.docno when sotype = 3 then pono end as nodokumen,
+			qtypackage,a.createddate,a.updatedate
 		from soheader a
 		left join company b on b.companyid = a.companyid
 		left join addressbook c on c.addressbookid = a.addressbookid 
@@ -309,7 +312,7 @@ class SoheaderController extends AdminController
 			'sort'=>array(
         'attributes'=>array(
              'soheaderid', 'sodate','sono','companyid','addressbookid', 'creditlimit', 'top', 'paycode', 'currentlimit',
-             'employeeid','pocustno','pendinganso', 'totalaftdisc','isdisplay'
+             'employeeid','pocustno','pendinganso', 'totalaftdisc','isdisplay','nodokumen'
         ),
 				'defaultOrder' => array( 
 					'soheaderid' => CSort::SORT_DESC
@@ -402,7 +405,7 @@ class SoheaderController extends AdminController
 			),
 		));
         
-        $sotype = array('materialtype','package');
+        $sotype = array('JENIS MATERIAL','PAKET','CABANG');
 		$this->render('index',array('dataProvider'=>$dataProvider,'dataProvidersodetail'=>$dataProvidersodetail,
 			'dataProvidersodisc'=>$dataProvidersodisc,'sotype'=>$sotype,'dataProviderCustomerinfo'=>$dataProviderCustomerinfo));
 	}
