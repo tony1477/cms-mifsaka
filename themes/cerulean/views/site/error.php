@@ -1,1 +1,0 @@
-<h3><?php echo $error['message'] ?></h3>
