@@ -1,0 +1,660 @@
+<script type="text/javascript">
+function newdata()
+{
+	jQuery.ajax({'url':'<?php echo Yii::app()->createUrl('admin/company/create')?>','data':{},
+		'type':'post','dataType':'json',
+		'success':function(data) {
+			if (data.status == "success")
+			{
+			$("input[name='company_0_companyid']").val(data.companyid);
+			$("input[name='company_0_companyname']").val('');
+      $("input[name='company_0_companycode']").val('');
+      $("input[name='company_0_address']").val('');
+      $("input[name='company_0_cityid']").val('');
+      $("input[name='company_0_zipcode']").val('');
+      $("input[name='company_0_taxno']").val('');
+      $("input[name='company_0_currencyid']").val(data.currencyid);
+      $("input[name='company_0_faxno']").val('');
+      $("input[name='company_0_phoneno']").val('');
+      $("input[name='company_0_webaddress']").val('');
+      $("input[name='company_0_email']").val('');
+      $("input[name='company_0_leftlogofile']").val('');
+      $("input[name='company_0_rightlogofile']").val('');
+      $("input[name='company_0_isholding']").prop('checked',true);
+      $("input[name='company_0_billto']").val('');
+      $("input[name='company_0_cityname']").val('');
+      $("input[name='company_0_currencyname']").val(data.currencyname);
+			
+			$('#InputDialog').modal();
+			}
+			else
+			{
+				toastr.error(data.div);
+			}
+		},
+		'cache':false});
+	return false;
+}
+
+function updatedata($id)
+{
+	jQuery.ajax({'url':'<?php echo Yii::app()->createUrl('admin/company/update')?>','data':{'id':$id},
+		'type':'post','dataType':'json',
+		'success':function(data) {
+			if (data.status == "success")
+			{
+				$("input[name='company_0_companyid']").val(data.companyid);
+				$("input[name='company_0_companyname']").val(data.companyname);
+      $("input[name='company_0_companycode']").val(data.companycode);
+      $("input[name='company_0_address']").val(data.address);
+      $("input[name='company_0_cityid']").val(data.cityid);
+      $("input[name='company_0_zipcode']").val(data.zipcode);
+      $("input[name='company_0_taxno']").val(data.taxno);
+      $("input[name='company_0_currencyid']").val(data.currencyid);
+      $("input[name='company_0_faxno']").val(data.faxno);
+      $("input[name='company_0_phoneno']").val(data.phoneno);
+      $("input[name='company_0_webaddress']").val(data.webaddress);
+      $("input[name='company_0_email']").val(data.email);
+      $("input[name='company_0_leftlogofile']").val(data.leftlogofile);
+      $("input[name='company_0_rightlogofile']").val(data.rightlogofile);
+      if (data.isholding == 1)
+			{
+				$("input[name='company_0_isholding']").prop('checked',true);
+			}
+			else
+			{
+				$("input[name='company_0_isholding']").prop('checked',false)
+			}
+      $("input[name='company_0_billto']").val(data.billto);
+      $("input[name='company_0_cityname']").val(data.cityname);
+      $("input[name='company_0_currencyname']").val(data.currencyname);
+				
+				$('#InputDialog').modal();
+			}
+			else
+			{
+				toastr.error(data.div);
+			}
+		},
+		'cache':false});
+	return false;
+}
+
+function savedata()
+{
+var isholding = 0;
+	if ($("input[name='company_0_isholding']").prop('checked'))
+	{
+		isholding = 1;
+	}
+	else
+	{
+		isholding = 0;
+	}
+	jQuery.ajax({'url':'<?php echo Yii::app()->createUrl('admin/company/save')?>',
+		'data':{
+			'companyid':$("input[name='company_0_companyid']").val(),
+			'companyname':$("input[name='company_0_companyname']").val(),
+      'companycode':$("input[name='company_0_companycode']").val(),
+      'address':$("input[name='company_0_address']").val(),
+      'cityid':$("input[name='company_0_cityid']").val(),
+      'zipcode':$("input[name='company_0_zipcode']").val(),
+      'taxno':$("input[name='company_0_taxno']").val(),
+      'currencyid':$("input[name='company_0_currencyid']").val(),
+      'faxno':$("input[name='company_0_faxno']").val(),
+      'phoneno':$("input[name='company_0_phoneno']").val(),
+      'webaddress':$("input[name='company_0_webaddress']").val(),
+      'email':$("input[name='company_0_email']").val(),
+      'leftlogofile':$("input[name='company_0_leftlogofile']").val(),
+      'rightlogofile':$("input[name='company_0_rightlogofile']").val(),
+      'isholding':isholding,
+      'billto':$("input[name='company_0_billto']").val(),
+		},
+		'type':'post','dataType':'json',
+		'success':function(data) {
+			if (data.status == "success")
+			{
+				$('#InputDialog').modal('hide');
+				toastr.info(data.div);
+				$.fn.yiiGridView.update("GridList");
+			}
+			else
+			{
+				toastr.error(data.div);
+			}
+		},
+		'cache':false});
+}
+
+function approvedata($id)
+{
+	$.msg.confirmation('Confirm','<?php echo $this->getCatalog('areyousure')?>',function(){	
+	jQuery.ajax({'url':'<?php echo Yii::app()->createUrl('admin/company/approve')?>',
+		'data':{'id':$id},
+		'type':'post','dataType':'json',
+		'success':function(data) {
+			if (data.status == "success")
+			{
+				toastr.info(data.div);
+				$.fn.yiiGridView.update("GridList");
+			}
+			else
+			{
+				toastr.error(data.div);
+			}
+		},
+		'cache':false});	});
+	return false;
+}
+function deletedata($id)
+{
+	$.msg.confirmation('Confirm','<?php echo $this->getCatalog('areyousure')?>',function(){	
+	jQuery.ajax({'url':'<?php echo Yii::app()->createUrl('admin/company/delete')?>',
+		'data':{'id':$id},
+		'type':'post','dataType':'json',
+		'success':function(data) {
+			if (data.status == "success")
+			{
+				toastr.info(data.div);
+				$.fn.yiiGridView.update("GridList");
+			}
+			else
+			{
+				toastr.error(data.div);
+			}
+		},
+	'cache':false});});
+	return false;
+}
+
+function purgedata($id)
+{
+	$.msg.confirmation('Confirm','<?php echo $this->getCatalog('areyousure')?>',function(){
+	jQuery.ajax({'url':'<?php echo Yii::app()->createUrl('admin/company/purge')?>','data':{'id':$id},
+		'type':'post','dataType':'json',
+		'success':function(data) {
+			if (data.status == "success")
+			{
+				toastr.info(data.div);
+				$.fn.yiiGridView.update("GridList");
+			}
+			else
+			{
+				toastr.error(data.div);
+			}
+		},
+		'cache':false});
+	});
+	return false;
+}
+
+function searchdata($id=0)
+{
+	$('#SearchDialog').modal('hide');
+	var array = 'company_0_companyid='+$id
++ '&companyname='+$("input[name='dlg_search_companyname']").val()
++ '&companycode='+$("input[name='dlg_search_companycode']").val()
++ '&address='+$("input[name='dlg_search_address']").val()
++ '&cityname='+$("input[name='dlg_search_cityname']").val()
++ '&zipcode='+$("input[name='dlg_search_zipcode']").val()
++ '&taxno='+$("input[name='dlg_search_taxno']").val()
++ '&currencyname='+$("input[name='dlg_search_currencyname']").val()
++ '&faxno='+$("input[name='dlg_search_faxno']").val()
++ '&phoneno='+$("input[name='dlg_search_phoneno']").val()
++ '&webaddress='+$("input[name='dlg_search_webaddress']").val()
++ '&email='+$("input[name='dlg_search_email']").val()
++ '&leftlogofile='+$("input[name='dlg_search_leftlogofile']").val()
++ '&rightlogofile='+$("input[name='dlg_search_rightlogofile']").val()
++ '&billto='+$("input[name='dlg_search_billto']").val();
+	$.fn.yiiGridView.update("GridList",{data:array});
+	return false;
+}
+
+function downpdf($id=0) {
+	var array = 'company_0_companyid='+$id
++ '&companyname='+$("input[name='dlg_search_companyname']").val()
++ '&companycode='+$("input[name='dlg_search_companycode']").val()
++ '&address='+$("input[name='dlg_search_address']").val()
++ '&cityname='+$("input[name='dlg_search_cityname']").val()
++ '&zipcode='+$("input[name='dlg_search_zipcode']").val()
++ '&taxno='+$("input[name='dlg_search_taxno']").val()
++ '&currencyname='+$("input[name='dlg_search_currencyname']").val()
++ '&faxno='+$("input[name='dlg_search_faxno']").val()
++ '&phoneno='+$("input[name='dlg_search_phoneno']").val()
++ '&webaddress='+$("input[name='dlg_search_webaddress']").val()
++ '&email='+$("input[name='dlg_search_email']").val()
++ '&leftlogofile='+$("input[name='dlg_search_leftlogofile']").val()
++ '&rightlogofile='+$("input[name='dlg_search_rightlogofile']").val()
++ '&billto='+$("input[name='dlg_search_billto']").val();
+	window.open('<?php echo Yii::app()->createUrl('Admin/company/downpdf')?>?'+array);
+}
+
+function downxls($id=0) {
+	var array = 'company_0_companyid='+$id
++ '&companyname='+$("input[name='dlg_search_companyname']").val()
++ '&companycode='+$("input[name='dlg_search_companycode']").val()
++ '&address='+$("input[name='dlg_search_address']").val()
++ '&cityname='+$("input[name='dlg_search_cityname']").val()
++ '&zipcode='+$("input[name='dlg_search_zipcode']").val()
++ '&taxno='+$("input[name='dlg_search_taxno']").val()
++ '&currencyname='+$("input[name='dlg_search_currencyname']").val()
++ '&faxno='+$("input[name='dlg_search_faxno']").val()
++ '&phoneno='+$("input[name='dlg_search_phoneno']").val()
++ '&webaddress='+$("input[name='dlg_search_webaddress']").val()
++ '&email='+$("input[name='dlg_search_email']").val()
++ '&leftlogofile='+$("input[name='dlg_search_leftlogofile']").val()
++ '&rightlogofile='+$("input[name='dlg_search_rightlogofile']").val()
++ '&billto='+$("input[name='dlg_search_billto']").val();
+	window.open('<?php echo Yii::app()->createUrl('Admin/company/downxls')?>?'+array);
+}
+
+function GetDetail($id)
+{
+	$('#ShowDetailDialog').modal('show');
+	var array = 'companyid='+$id
+} 
+</script>
+<h3><?php echo $this->getCatalog('company') ?></h3>
+<?php if ($this->checkAccess('company','iswrite')) { ?>
+<button name="CreateButton" type="button" class="btn btn-primary" onclick="newdata()"><?php echo $this->getCatalog('new')?></button>
+<?php } ?>
+<?php if ($this->checkAccess('company','ispost')) { ?>
+<button name="ApproveButton" type="button" class="btn btn-success" onclick="approvedata($.fn.yiiGridView.getSelection('GridList'))"><?php echo $this->getCatalog('approve')?></button>
+<?php } ?>
+<?php if ($this->checkAccess('company','isreject')) { ?>
+<button name="DeleteButton" type="button" class="btn btn-warning" onclick="deletedata($.fn.yiiGridView.getSelection('GridList'))"><?php echo $this->getCatalog('reject')?></button>
+<?php } ?>
+<?php if ($this->checkAccess('company','ispurge')) { ?>
+<button name="PurgeButton" type="button" class="btn btn-danger" onclick="purgedata($.fn.yiiGridView.getSelection('GridList'))"><?php echo $this->getCatalog('purge')?></button>
+<?php } ?>
+<button name="SearchButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#SearchDialog"><?php echo $this->getCatalog('search')?></button>
+<?php if ($this->checkAccess('company','isdownload')) { ?>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <?php echo $this->getCatalog('download')?> <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a onclick="downpdf($.fn.yiiGridView.getSelection('GridList'))"><?php echo $this->getCatalog('downpdf')?></a></li>
+      <li><a onclick="downxls($.fn.yiiGridView.getSelection('GridList'))"><?php echo $this->getCatalog('downxls')?></a></li>
+    </ul>
+  </div>
+<?php } ?>
+
+<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+    'dataProvider'=>$dataProvider,
+		'id'=>'GridList',
+		'selectableRows'=>2,
+    'ajaxUpdate'=>true,
+		'filter'=>null,
+		'enableSorting'=>true,
+		'columns'=>array(
+			array(
+				'class'=>'CCheckBoxColumn',
+				'id'=>'ids',
+				'htmlOptions' => array('style'=>'width:10px'),
+			),
+			array
+			(
+				'class'=>'CButtonColumn',
+				'template'=>'{edit} {delete} {purge} {pdf} {xls}',
+				'htmlOptions' => array('style'=>'width:160px'),
+				'buttons'=>array
+				(
+					'edit' => array
+					(
+							'label'=>$this->getCatalog('edit'),
+							'imageUrl'=>Yii::app()->baseUrl.'/images/edit.png',
+							'visible'=>$this->booltostr($this->checkAccess('company','iswrite')),							
+							'url'=>'"#"',
+							'click'=>"function() { 
+								updatedata($(this).parent().parent().children(':nth-child(3)').text());
+							}",
+					),
+					'delete' => array
+					(
+							'label'=>$this->getCatalog('delete'),
+							'imageUrl'=>Yii::app()->baseUrl.'/images/active.png',
+							'visible'=>$this->booltostr($this->checkAccess('company','isreject')),							
+							'url'=>'"#"',
+							'click'=>"function() { 
+								deletedata($(this).parent().parent().children(':nth-child(3)').text());
+							}",
+					),
+					'purge' => array
+					(
+							'label'=>$this->getCatalog('purge'),
+							'imageUrl'=>Yii::app()->baseUrl.'/images/trash.png',
+							'visible'=>$this->booltostr($this->checkAccess('company','ispurge')),							
+							'url'=>'"#"',
+							'click'=>"function() { 
+								purgedata($(this).parent().parent().children(':nth-child(3)').text());
+							}",
+					),
+					'pdf' => array
+					(
+							'label'=>$this->getCatalog('downpdf'),
+							'imageUrl'=>Yii::app()->baseUrl.'/images/pdf.png',
+							'visible'=>$this->booltostr($this->checkAccess('company','isdownload')),
+							'url'=>'"#"',
+							'click'=>"function() { 
+								downpdf($(this).parent().parent().children(':nth-child(3)').text());
+							}",
+					),
+					'xls' => array
+					(
+							'label'=>$this->getCatalog('downxls'),
+							'imageUrl'=>Yii::app()->baseUrl.'/images/xls.png',
+							'visible'=>$this->booltostr($this->checkAccess('company','isdownload')),
+							'url'=>'"#"',
+							'click'=>"function() { 
+								downxls($(this).parent().parent().children(':nth-child(3)').text());
+							}",
+					),
+				),
+			),
+array(
+					'header'=>$this->getCatalog('companyid'),
+					'name'=>'companyid',
+					'value'=>'$data["companyid"]'
+				),
+							array(
+					'header'=>$this->getCatalog('companyname'),
+					'name'=>'companyname',
+					'value'=>'$data["companyname"]'
+				),
+							array(
+					'header'=>$this->getCatalog('companycode'),
+					'name'=>'companycode',
+					'value'=>'$data["companycode"]'
+				),
+							array(
+					'header'=>$this->getCatalog('address'),
+					'name'=>'address',
+					'value'=>'$data["address"]'
+				),
+							array(
+					'header'=>$this->getCatalog('cityname'),
+					'name'=>'cityid',
+					'value'=>'$data["cityname"]'
+				),
+							array(
+					'header'=>$this->getCatalog('zipcode'),
+					'name'=>'zipcode',
+					'value'=>'$data["zipcode"]'
+				),
+							array(
+					'header'=>$this->getCatalog('taxno'),
+					'name'=>'taxno',
+					'value'=>'$data["taxno"]'
+				),
+							array(
+					'header'=>$this->getCatalog('currencyname'),
+					'name'=>'currencyid',
+					'value'=>'$data["currencyname"]'
+				),
+							array(
+					'header'=>$this->getCatalog('faxno'),
+					'name'=>'faxno',
+					'value'=>'$data["faxno"]'
+				),
+							array(
+					'header'=>$this->getCatalog('phoneno'),
+					'name'=>'phoneno',
+					'value'=>'$data["phoneno"]'
+				),
+							array(
+					'header'=>$this->getCatalog('webaddress'),
+					'name'=>'webaddress',
+					'value'=>'$data["webaddress"]'
+				),
+							array(
+					'header'=>$this->getCatalog('email'),
+					'name'=>'email',
+					'value'=>'$data["email"]'
+				),
+							array(
+					'header'=>$this->getCatalog('leftlogofile'),
+					'name'=>'leftlogofile',
+					'value'=>'$data["leftlogofile"]'
+				),
+							array(
+					'header'=>$this->getCatalog('rightlogofile'),
+					'name'=>'rightlogofile',
+					'value'=>'$data["rightlogofile"]'
+				),
+							array(
+					'class'=>'CCheckBoxColumn',
+					'name'=>'isholding',
+					'header'=>$this->getCatalog('isholding'),
+					'selectableRows'=>'0',
+					'checked'=>'$data["isholding"]',
+				),array(
+					'header'=>$this->getCatalog('billto'),
+					'name'=>'billto',
+					'value'=>'$data["billto"]'
+				),
+							array(
+					'header'=>$this->getCatalog('recordstatus'),
+					'name'=>'statusname',
+					'value'=>'$data["statusname"]'
+				),
+							
+		)
+));
+?>
+<div id="SearchDialog" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><?php echo $this->getCatalog('search') ?></h4>
+      </div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="dlg_search_companyname"><?php echo $this->getCatalog('companyname')?></label>
+						<input type="text" class="form-control" name="dlg_search_companyname">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_companycode"><?php echo $this->getCatalog('companycode')?></label>
+						<input type="text" class="form-control" name="dlg_search_companycode">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_address"><?php echo $this->getCatalog('address')?></label>
+						<input type="text" class="form-control" name="dlg_search_address">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_cityname"><?php echo $this->getCatalog('cityname')?></label>
+						<input type="text" class="form-control" name="dlg_search_cityname">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_zipcode"><?php echo $this->getCatalog('zipcode')?></label>
+						<input type="text" class="form-control" name="dlg_search_zipcode">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_taxno"><?php echo $this->getCatalog('taxno')?></label>
+						<input type="text" class="form-control" name="dlg_search_taxno">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_currencyname"><?php echo $this->getCatalog('currencyname')?></label>
+						<input type="text" class="form-control" name="dlg_search_currencyname">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_faxno"><?php echo $this->getCatalog('faxno')?></label>
+						<input type="text" class="form-control" name="dlg_search_faxno">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_phoneno"><?php echo $this->getCatalog('phoneno')?></label>
+						<input type="text" class="form-control" name="dlg_search_phoneno">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_webaddress"><?php echo $this->getCatalog('webaddress')?></label>
+						<input type="text" class="form-control" name="dlg_search_webaddress">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_email"><?php echo $this->getCatalog('email')?></label>
+						<input type="text" class="form-control" name="dlg_search_email">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_leftlogofile"><?php echo $this->getCatalog('leftlogofile')?></label>
+						<input type="text" class="form-control" name="dlg_search_leftlogofile">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_rightlogofile"><?php echo $this->getCatalog('rightlogofile')?></label>
+						<input type="text" class="form-control" name="dlg_search_rightlogofile">
+					</div>
+          <div class="form-group">
+						<label for="dlg_search_billto"><?php echo $this->getCatalog('billto')?></label>
+						<input type="text" class="form-control" name="dlg_search_billto">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success" onclick="searchdata()"><?php echo $this->getCatalog('search')?></button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->getCatalog('close')?></button>
+				</div>
+		</div>
+	</div>
+</div>
+<div id="InputDialog" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><?php echo $this->getCatalog('company') ?></h4>
+      </div>
+      <div class="modal-body">
+				<input type="hidden" class="form-control" name="company_0_companyid">
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_companycode"><?php echo $this->getCatalog('companycode')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_companycode">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_address"><?php echo $this->getCatalog('address')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_address">
+						</div>
+					</div>
+							
+        <?php $this->widget('DataPopUp',
+						array('id'=>'Widget','IDField'=>'company_0_cityid','ColField'=>'company_0_cityname',
+							'IDDialog'=>'company_0_cityid_dialog','titledialog'=>$this->getCatalog('cityname'),'classtype'=>'col-md-4',
+							'classtypebox'=>'col-md-8',
+							'PopUpName'=>'admin.components.views.CityPopUp','PopGrid'=>'company_0_cityidgrid')); 
+					?>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_zipcode"><?php echo $this->getCatalog('zipcode')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_zipcode">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_taxno"><?php echo $this->getCatalog('taxno')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_taxno">
+						</div>
+					</div>
+							
+        <?php $this->widget('DataPopUp',
+						array('id'=>'Widget','IDField'=>'company_0_currencyid','ColField'=>'company_0_currencyname',
+							'IDDialog'=>'company_0_currencyid_dialog','titledialog'=>$this->getCatalog('currencyname'),'classtype'=>'col-md-4',
+							'classtypebox'=>'col-md-8',
+							'PopUpName'=>'admin.components.views.CurrencyPopUp','PopGrid'=>'company_0_currencyidgrid')); 
+					?>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_faxno"><?php echo $this->getCatalog('faxno')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_faxno">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_phoneno"><?php echo $this->getCatalog('phoneno')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_phoneno">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_webaddress"><?php echo $this->getCatalog('webaddress')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_webaddress">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_email"><?php echo $this->getCatalog('email')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_email">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_leftlogofile"><?php echo $this->getCatalog('leftlogofile')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_leftlogofile">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_rightlogofile"><?php echo $this->getCatalog('rightlogofile')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_rightlogofile">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_isholding"><?php echo $this->getCatalog('isholding')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="checkbox" name="company_0_isholding">
+						</div>
+					</div>
+							
+        <div class="row">
+						<div class="col-md-4">
+							<label for="company_0_billto"><?php echo $this->getCatalog('billto')?></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="company_0_billto">
+						</div>
+					</div>
+							
+				
+      </div>
+      <div class="modal-footer">
+				<button type="submit" class="btn btn-success" onclick="savedata()"><?php echo $this->getCatalog('save')?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->getCatalog('close')?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
