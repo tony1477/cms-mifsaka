@@ -127,10 +127,10 @@ return array(
 			'viewPath' => 'application.views.mail',             
 		),
 		
-		'cache'=>array(
+		/*'cache'=>array(
       //'class'=>'system.caching.CFileCache',
       //'class'=>'CRedisCache',
-		),
+		),*/
 	),
 
 	'params'=>array(
