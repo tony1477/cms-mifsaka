@@ -470,7 +470,7 @@ function updatedatasodetail($id) {
   var x;
   let package = $("select#sotype").val();
   let materialtypeid = $("input[name='materialtypeid']").val();
-  if (package == 2) {
+  if (package == 2 || package == 3) {
     console.log(package);
     //$("#productidShowButton").off('click.onclick');
     //$("#productidShowButton").prop("disabled",true);
@@ -478,6 +478,7 @@ function updatedatasodetail($id) {
     DisablebuttonDetail();
     $("input[name='productname']").prop("readonly", true);
     $("input[name='qty']").prop("readonly", true);
+    $("input[name='price']").prop("disabled", true);
     //$('#elementId').off('click.myevent');
   } else {
     EnableButtonDetail();

@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-wid th, initial-scale=1">
 	<meta name="Description" content="Make your business optimize with Capella ERP Indonesia The Best Web ERP Apps">
 	<meta name="msapplication-square310x310logo" content="<?php echo Yii::app()->request->baseUrl;?>/images/launcher-icon-192192.png">
 	<meta name="theme-color" content="#f00">

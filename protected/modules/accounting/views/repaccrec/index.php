@@ -107,6 +107,7 @@ function downpdfrepaccrec() {
 	{
 		var array = 'lro='+$("select[name='listrepaccrec']").val()
 			+ '&company='+$("input[name='companyid']").val()
+			+ '&plantid='+$("input[name='plantid']").val()
 			+ '&sloc='+$("input[name='sloccode']").val()
 			+ '&materialgroup='+$("input[name='description']").val()
 			+ '&customer='+$("input[name='fullname']").val()
@@ -114,12 +115,13 @@ function downpdfrepaccrec() {
 			+ '&sales='+$("input[name='employeename']").val()
 			+ '&spv='+$("input[name='spvname']").val()
 			+ '&salesarea='+$("input[name='salesarea']").val()
+			+ '&groupcustomer='+$("input[name='groupcustomer']").val()
 			+ '&umurpiutang='+$("input[name='umurpiutang']").val()
 			+ '&isdisplay='+$("select[name='isdisplay']").val()
       + '&isbaddebt='+$("select[name='isbaddebt']").val()
 			+ '&startdate='+$("input[name='startdate']").val()
 			+ '&enddate='+$("input[name='enddate']").val()
-			+'&per=10';
+			+ '&per=10';
 		window.open('<?php echo Yii::app()->createUrl('accounting/repaccrec/downpdf')?>?'+array);
 	}
 };
@@ -141,19 +143,21 @@ function downxlsrepaccrec() {
 	{
 		var array = 'lro='+$("select[name='listrepaccrec']").val()
 			+ '&company='+$("input[name='companyid']").val()
+			+ '&plantid='+$("input[name='plantid']").val()
 			+ '&sloc='+$("input[name='sloccode']").val()
 			+ '&materialgroup='+$("input[name='description']").val()
 			+ '&customer='+$("input[name='fullname']").val()
 			+ '&product='+$("input[name='productname']").val()
-			+ '&startdate='+$("input[name='startdate']").val()
 			+ '&sales='+$("input[name='employeename']").val()
 			+ '&spv='+$("input[name='spvname']").val()
 			+ '&salesarea='+$("input[name='salesarea']").val()
+			+ '&groupcustomer='+$("input[name='groupcustomer']").val()
 			+ '&umurpiutang='+$("input[name='umurpiutang']").val()
 			+ '&isdisplay='+$("select[name='isdisplay']").val()
       + '&isbaddebt='+$("select[name='isbaddebt']").val()
 			+ '&startdate='+$("input[name='startdate']").val()
-			+ '&enddate='+$("input[name='enddate']").val()+'&per=10';
+			+ '&enddate='+$("input[name='enddate']").val()
+			+ '&per=10';
 		window.open('<?php echo Yii::app()->createUrl('accounting/repaccrec/downxls')?>?'+array);
 	}
 };
@@ -172,44 +176,45 @@ function downxlsrepaccrec() {
 		<select class="form-control" name="listrepaccrec" >
 				<option value="">Pilih Laporan</option>
 				<option value="1">1.1.Rincian Pelunasan Piutang Per Dokumen</option>
-				<option value="2">1.2.Rekap Pelunasan Piutang Per Divisi</option>
-				<option value="15">1.3.Rincian Pelunasan Piutang Per Sales</option>
-				<option value="16">1.4.Rekap Pelunasan Piutang Per Sales</option>
-				<option value="17">1.5.Rincian Pelunasan Piutang Per Sales Per Jenis Barang</option>
-				<option value="18">1.6.Rincian Pelunasan Piutang Per Sales Per Jenis Barang (Tanpa OB)</option>
-				<option value="19">1.7.Rekap Pelunasan Piutang Per Sales Per Jenis Barang</option>
-				<option value="22">1.8.Rincian Pelunasan Piutang Per Customer</option>
-				<option value="23">1.9.Rekap Pelunasan Piutang Per Customer</option>
-				<option value="24">1.10.Rincian Pelunasan Piutang Per Customer Per Jenis Barang</option>
-				<option value="25">1.11.Rekap Pelunasan Piutang Per Customer Per Jenis Barang</option>
-				<option value="29">1.12.Rincian Pelunasan Piutang (Filter Tanggal Invoice)</option>
-				<option value="30">1.13.Rincian Pelunasan Piutang (Filter Tanggal Pelunasan)</option>
-				<option value="20">1.14.Rekap Penjualan VS Pelunasan Per Bulan Per Customer</option>
-				<option value="21">1.15.Rekap Piutang VS Pelunasan Per Bulan Per Customer</option>
-				<option value="3">2.1.Kartu Piutang Dagang</option>
-				<option value="4">2.2.Rekap Piutang Dagang Per Customer</option>
-				<option value="26">2.3.Rekap Umur Piutang Dagang</option>
-				<option value="27">2.4.Rekap Umur Piutang Dagang Per Bulan Per Tahun</option>
-				<option value="5">2.5.Rincian Faktur & Retur Jual Belum Lunas</option>
-				<option value="28">2.6.Rincian Faktur & Retur Jual Belum Lunas (Filter Tanggal JTT)</option>
-				<option value="6">2.7.Rincian Umur Piutang Dagang Per Customer</option>
-				<option value="7">2.8.Rekap Umur Piutang Dagang Per Customer</option>
-				<option value="35">2.9.Rekap Umur Piutang Dagang Per Customer VS TOP</option>
-				<option value="8">2.10.Rincian Faktur & Retur Jual Belum Lunas Per Sales</option>
-				<option value="9">2.11.Rekap Kontrol Piutang Customer vs Plafon</option> 
-				<option value="10">2.12.Rincian Kontrol Piutang Customer vs Plafon</option>
-				<option value="36">2.13.Rekap Monitoring Piutang Per Minggu Per Customer Per Sales</option>
-				<option value="11">2.14.Konfirmasi Piutang Dagang</option>
-				<option value="38">2.15.Rekap Umur Piutang Dagang Per Company</option>
-				<option value="31">3.1.Rekap Target VS Realisasi Tagihan</option>
-				<option value="32">3.2.Rincian Komisi Tagihan Per Sales</option>
-				<option value="39">3.3.Rekap Komisi Tagihan Per Sales</option>
-				<option value="37">3.5.Rekap Komisi Tagihan Per SPV</option>
-				<option value="12">4.1.Rekap Invoice AR Per Dokumen Belum Status Max</option>
-				<option value="13">4.2.Rekap Nota Retur Penjualan Per Dokumen Belum Status Max</option>
-				<option value="14">4.3.Rekap Pelunasan Piutang Per Dokumen Belum Status Max</option>
-				<option value="33">4.4.Rekap Target Tagihan Per Dokumen Belum Status Max</option>
-				<option value="34">4.5.Rekap Skala Komisi Tagihan Per Dokumen Belum Status Max</option>
+					<option value="2">1.2.Rekap Pelunasan Piutang Per Divisi</option>
+					<option value="15">1.3.Rincian Pelunasan Piutang Per Sales</option>
+					<option value="16">1.4.Rekap Pelunasan Piutang Per Sales</option>
+					<option value="17">1.5.Rincian Pelunasan Piutang Per Sales Per Jenis Barang</option>
+					<option value="18">1.6.Rincian Pelunasan Piutang Per Sales Per Jenis Barang (Tanpa OB)</option>
+					<option value="19">1.7.Rekap Pelunasan Piutang Per Sales Per Jenis Barang</option>
+					<option value="22">1.8.Rincian Pelunasan Piutang Per Customer</option>
+					<option value="23">1.9.Rekap Pelunasan Piutang Per Customer</option>
+					<option value="24">1.10.Rincian Pelunasan Piutang Per Customer Per Jenis Barang</option>
+					<option value="25">1.11.Rekap Pelunasan Piutang Per Customer Per Jenis Barang</option>
+					<option value="29">1.12.Rincian Pelunasan Piutang (Filter Tanggal Invoice)</option>
+					<option value="30">1.13.Rincian Pelunasan Piutang (Filter Tanggal Pelunasan)</option>
+					<option value="20">1.14.Rekap Penjualan VS Pelunasan Per Bulan Per Customer</option>
+					<option value="21">1.15.Rekap Piutang VS Pelunasan Per Bulan Per Customer</option>
+					<option value="3">2.1.Kartu Piutang Dagang</option>
+					<option value="4">2.2.Rekap Piutang Dagang Per Customer</option>
+					<option value="26">2.3.Rekap Umur Piutang Dagang</option>
+					<option value="27">2.4.Rekap Umur Piutang Dagang Per Bulan Per Tahun</option>
+					<option value="5">2.5.1.Rincian Faktur & Retur Jual Belum Lunas</option>
+					<option value="41">2.5.2.Rincian Faktur & Retur Jual Belum Lunas Per Kategori Customer</option>
+					<option value="28">2.6.Rincian Faktur & Retur Jual Belum Lunas (Filter Tanggal JTT)</option>
+					<option value="6">2.7.Rincian Umur Piutang Dagang Per Customer</option>
+					<option value="7">2.8.Rekap Umur Piutang Dagang Per Customer</option>
+					<option value="35">2.9.Rekap Umur Piutang Dagang Per Customer VS TOP</option>
+					<option value="8">2.10.Rincian Faktur & Retur Jual Belum Lunas Per Sales</option>
+					<option value="9">2.11.Rekap Kontrol Piutang Customer vs Plafon</option> 
+					<option value="10">2.12.Rincian Kontrol Piutang Customer vs Plafon</option>
+					<option value="36">2.13.Rekap Monitoring Piutang Per Minggu Per Customer Per Sales</option>
+					<option value="11">2.14.Konfirmasi Piutang Dagang</option>
+					<option value="38">2.15.Rekap Umur Piutang Dagang Per Company</option>
+					<option value="31">3.1.Rekap Target VS Realisasi Tagihan</option>
+					<option value="32">3.2.Rincian Komisi Tagihan Per Sales</option>
+					<option value="39">3.3.Rekap Komisi Tagihan Per Sales</option>
+					<option value="37">3.5.Rekap Komisi Tagihan Per SPV</option>
+					<option value="12">4.1.Rekap Invoice AR Per Dokumen Belum Status Max</option>
+					<option value="13">4.2.Rekap Nota Retur Penjualan Per Dokumen Belum Status Max</option>
+					<option value="14">4.3.Rekap Pelunasan Piutang Per Dokumen Belum Status Max</option>
+					<option value="33">4.4.Rekap Target Tagihan Per Dokumen Belum Status Max</option>
+					<option value="34">4.5.Rekap Skala Komisi Tagihan Per Dokumen Belum Status Max</option>
 		</select>
 	</div>
 </div>
@@ -221,6 +226,14 @@ function downxlsrepaccrec() {
 							'PopUpName'=>'admin.components.views.CompanyUserPopUp','PopGrid'=>'companyidgrid')); 
 					?>
             </div>
+			<div id="repaccrec_plantid">
+			<?php $this->widget('DataPopUp',
+						array('id'=>'Widget','IDField'=>'plantid','ColField'=>'plantcode',
+							'IDDialog'=>'plant_dialog','titledialog'=>$this->getCatalog('plant'),'classtype'=>'col-md-4',
+							'classtypebox'=>'col-md-8',
+							'PopUpName'=>'common.components.views.PlantCompanyPopUp','PopGrid'=>'plantidgrid','RelationID'=>'companyid')); 
+					?>
+			</div>
             <div id="repaccrec_slocid">
 			<?php $this->widget('DataPopUp',
 						array('id'=>'Widget','IDField'=>'slocid','ColField'=>'sloccode',
@@ -270,6 +283,14 @@ function downxlsrepaccrec() {
 							'PopUpName'=>'order.components.views.SalesPopUp','PopGrid'=>'spvgrid')); 
 					?>   
             </div>
+						<div id="repaccrec_groupcustomer">
+						<?php $this->widget('DataPopUp',
+						array('id'=>'Widget','IDField'=>'groupcustomerid','ColField'=>'groupcustomer',
+							'IDDialog'=>'groupcustomer_dialog','titledialog'=>$this->getCatalog('groupcustomer'),'classtype'=>'col-md-4',
+							'classtypebox'=>'col-md-8',
+							'PopUpName'=>'common.components.views.GroupcustomerPopUp','PopGrid'=>'groupcustomergrid')); 
+					?>
+						</div>
             <div id="repaccrec_salesareaid">
 					<?php $this->widget('DataPopUp',
 						array('id'=>'Widget','IDField'=>'salesareaid','ColField'=>'salesarea',
